@@ -1,6 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import { addEmployee } from "./employeeSlice";
 
 const schema = z.object({
   firstName: z.string().min(1),
@@ -14,7 +17,7 @@ const schema = z.object({
   department: z.string().min(1),
 });
 
-type FormFields = z.infer<typeof schema>;
+export type FormFields = z.infer<typeof schema>;
 
 function EmployeeForm() {
   const {
@@ -23,8 +26,10 @@ function EmployeeForm() {
     formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
+  const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+    // console.log(data);
+    dispatch(addEmployee(data));
   };
 
   return (
