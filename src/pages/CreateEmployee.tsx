@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
+import EmployeeForm from "../features/employeeForm/EmployeeForm";
 
 function CreateEmployee() {
   return (
     <>
-      <h1>Create Employee</h1>
-      <Link to="employee-list">View Current Employees</Link>
+      <div className="title">
+        <h1>HRnet</h1>
+      </div>
+      <div className="container">
+        <Link to="employee-list">View Current Employees</Link>
+        <h1>Create Employee</h1>
+        <EmployeeForm />
+        <br />
+        <button type="submit" form="create-employee">Save</button>
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
     </>
   );
 }
