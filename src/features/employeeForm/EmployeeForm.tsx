@@ -23,12 +23,9 @@ function EmployeeForm() {
     formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit: SubmitHandler<any> = (data) => {
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
   };
-  console.log("errors: ");
-  console.log(errors);
 
   return (
     <form id="create-employee" onSubmit={handleSubmit(onSubmit)}>
