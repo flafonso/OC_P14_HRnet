@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import EmployeeForm from "../features/employeeForm/EmployeeForm";
 
-function CreateEmployee() {
+function CreateEmployeePage() {
   return (
     <>
       <div className="title">
@@ -22,4 +22,4 @@ function CreateEmployee() {
   );
 }
 
-export default CreateEmployee;
+export default CreateEmployeePage;

@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./app/App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import CreateEmployee from "./pages/CreateEmployee.tsx";
-import EmployeeList from "./pages/EmployeeList.tsx";
+import CreateEmployeePage from "./pages/CreateEmployeePage.tsx";
+import EmployeeListPage from "./pages/EmployeeListPage.tsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 
@@ -15,11 +15,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <CreateEmployee />,
+        element: <CreateEmployeePage />,
       },
       {
         path: "employee-list",
-        element: <EmployeeList />,
+        element: <EmployeeListPage />,
       },
     ],
   },
