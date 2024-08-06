@@ -1,0 +1,10 @@
+/* .dataTable_wrapper {} */
+
+table.dataTable thead th {
+  cursor: pointer;
+}
+
+
+.dataTable {
+  border: solid 1px red;
+}

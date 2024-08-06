@@ -1,4 +1,4 @@
-import DataTable from "../../components/DataTable";
+import DataTable from "../../components/dataTable/DataTable";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
