@@ -1,10 +1,70 @@
-/* .dataTable_wrapper {} */
 
-table.dataTable thead th {
-  cursor: pointer;
+.dataTable_wrapper {
+  width: 100%;
+  margin: 20px 0;
 }
 
-
 .dataTable {
-  border: solid 1px red;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  /* font-family: Arial, sans-serif; */
+}
+
+.dataTable thead th {
+  cursor: pointer;
+  background-color: #ffffff;
+  border-bottom: 1px solid #111;
+  padding: 10px 18px;
+  text-align: center;
+}
+
+.dataTable tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.dataTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dataTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.dataTable tbody td {
+  padding: 8px;
+}
+
+.dataTable_wrapper input[type="text"] {
+  margin: 10px 0;
+  padding: 8px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.dataTable_wrapper .pagination {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.dataTable_wrapper .pagination button {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.dataTable_wrapper .pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.dataTable_wrapper .pagination span {
+  line-height: 32px;
+  font-size: 16px;
 }
