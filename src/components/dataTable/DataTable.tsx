@@ -17,7 +17,7 @@ interface DataTableProps {
 }
 
 function DataTable({ id, className, data, columns }: DataTableProps) {
-  console.log(data);
+  // console.log(data);
   console.log(columns);
   // console.log(id);
   // console.log(className);
@@ -26,6 +26,8 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
     direction: string;
   }>({ id: columns[0].data, direction: "asc" });
   const [search, setSearch] = useState<string>("");
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => {
@@ -48,6 +50,12 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
     });
   }, [search, sortedData]);
 
+  const paginationData = useMemo(() => {
+    console.log(dataMatcheSearch);
+    const startIndex = rowsPerPage * currentPage;
+    return dataMatcheSearch.slice(startIndex, startIndex + rowsPerPage);
+  }, [dataMatcheSearch, currentPage, rowsPerPage]);
+
   const rowContent = (rowData: RowData) => {
     // console.log(rowData);
     return columns.map((column: Column, index: number) => (
@@ -66,14 +74,69 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value.toLocaleLowerCase());
+    setCurrentPage(0);
     console.log(search);
   };
 
+  const handleSelectRows = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRowsPerPage(Number(e.target.value));
+    console.log(rowsPerPage);
+  };
+
+  const maxPage = useMemo(() => {
+    return Math.ceil(dataMatcheSearch.length / rowsPerPage);
+  }, [dataMatcheSearch, rowsPerPage]);
+
+  const nextPage = () => {
+    if (currentPage < maxPage - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const previousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginateBtnIndex = () => {
+    const btnList = [];
+    for (let i = 0; i < maxPage; i++) {
+      btnList.push(
+        <a
+          className="paginate_button"
+          key={`paginate-${i}`}
+          onClick={() => {
+            setCurrentPage(i);
+          }}
+        >
+          {i + 1}
+        </a>
+      );
+    }
+    return btnList;
+  };
+
   return (
-    <div id={`${id}_wrapper`} className="dataTable_wrapper">
-      <div className={`${id}_filter`}>
-        <label htmlFor="input-search">Search :</label>
-        <input type="search" id="input-search" onChange={handleSearch} />
+    <div id={`${id}_wrapper`} className="dataTables_wrapper">
+      <div className="dataTables-header">
+        <div id={`${id}_length`} className="dataTables_length">
+          <label>
+            Show{" "}
+            <select name={`${id}_length`} onChange={handleSelectRows}>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>{" "}
+            entries
+          </label>
+        </div>
+        <div id={`${id}_filter`} className="dataTables_filter">
+          <label>
+            Search:{" "}
+            <input type="search" id="input-search" onChange={handleSearch} />
+          </label>
+        </div>
       </div>
       <table id={id} className={`${className} dataTable`}>
         <thead>
@@ -94,11 +157,36 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
           </tr>
         </thead>
         <tbody>
-          {dataMatcheSearch.map((rowData: RowData, index: number) => (
+          {paginationData.map((rowData: RowData, index: number) => (
             <tr key={index}>{rowContent(rowData)}</tr>
           ))}
         </tbody>
       </table>
+      <div className="dataTables-footer">
+        <div className="dataTables_info" id={`${id}_info`}>
+          Showing{" "}
+          {`${rowsPerPage * currentPage + 1} to ${
+            rowsPerPage * currentPage + rowsPerPage
+          } of ${dataMatcheSearch.length}`}
+        </div>
+        <div className="dataTables_paginate" id={`${id}_paginate`}>
+          <button
+            className="paginate_button"
+            onClick={previousPage}
+            disabled={currentPage === 0}
+          >
+            Previous
+          </button>
+          <span>{paginateBtnIndex()}</span>
+          <button
+            className="paginate_button"
+            onClick={nextPage}
+            disabled={currentPage === maxPage - 1}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
