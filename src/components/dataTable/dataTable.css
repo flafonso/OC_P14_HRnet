@@ -29,6 +29,14 @@
   border-bottom: 1px solid #111;
   padding: 10px 18px;
   text-align: center;
+  background: no-repeat url("./assets/sort_both.png") right;
+}
+
+.dataTable thead th.asc {
+  background: no-repeat url("./assets/sort_asc.png") right;
+}
+.dataTable thead th.desc {
+  background: no-repeat url("./assets/sort_desc.png") right;
 }
 
 .dataTable tbody tr {
@@ -40,7 +48,7 @@
 }
 
 .dataTable tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f6f6f6;
 }
 
 .dataTable tbody td {
@@ -105,7 +113,8 @@
   background-color: white;
 }
 
-/* .paginate_button:hover {
+.paginate_button.current, 
+.paginate_button.current:hover {
   color: #333 !important;
   border: 1px solid #979797;
   background-color: white;
@@ -115,7 +124,7 @@
   background: -ms-linear-gradient(top, #fff 0%, #dcdcdc 100%);
   background: -o-linear-gradient(top, #fff 0%, #dcdcdc 100%);
   background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
-} */
+}
 
 .paginate_button:hover {
   color: white !important;
@@ -140,5 +149,16 @@
   color: #666 !important;
   border: 1px solid transparent;
   background: transparent;
-  box-shadow: none
+  box-shadow: none;
+}
+
+.column-short_cell {
+  background-color: #f1f1f1;
+}
+.dataTable tbody tr:nth-child(even) .column-short_cell {
+  background-color: #fafafa;
+}
+
+.dataTable tbody tr:hover .column-short_cell {
+  background-color: #eaeaea;
 }

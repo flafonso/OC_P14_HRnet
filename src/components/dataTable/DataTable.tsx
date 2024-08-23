@@ -59,7 +59,12 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
   const rowContent = (rowData: RowData) => {
     // console.log(rowData);
     return columns.map((column: Column, index: number) => (
-      <td key={index}>{rowData[column.data]}</td>
+      <td
+        key={index}
+        className={columnSort.id === column.data ? "column-short_cell" : ""}
+      >
+        {rowData[column.data]}
+      </td>
     ));
   };
 
@@ -69,6 +74,8 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
         ...columnSort,
         direction: columnSort.direction === "asc" ? "desc" : "asc",
       });
+    } else {
+      setColumnSort({ id: columnId, direction: "asc" });
     }
   };
 
@@ -98,12 +105,12 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
     }
   };
 
-  const paginateBtnIndex = () => {
+  const paginateBtnPage = () => {
     const btnList = [];
     for (let i = 0; i < maxPage; i++) {
       btnList.push(
         <a
-          className="paginate_button"
+          className={`paginate_button ${currentPage === i ? "current" : ""}`}
           key={`paginate-${i}`}
           onClick={() => {
             setCurrentPage(i);
@@ -187,7 +194,7 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
           >
             Previous
           </button>
-          <span>{paginateBtnIndex()}</span>
+          <span>{paginateBtnPage()}</span>
           <button
             className="paginate_button"
             onClick={nextPage}
