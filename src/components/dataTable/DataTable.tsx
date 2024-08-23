@@ -82,7 +82,8 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value.toLocaleLowerCase());
     setCurrentPage(0);
-    console.log(search);
+    console.log(currentPage);
+    console.log(maxPage);
   };
 
   const handleSelectRows = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -198,7 +199,7 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
           <button
             className="paginate_button"
             onClick={nextPage}
-            disabled={currentPage === maxPage - 1}
+            disabled={maxPage === 0 || currentPage === maxPage - 1}
           >
             Next
           </button>
