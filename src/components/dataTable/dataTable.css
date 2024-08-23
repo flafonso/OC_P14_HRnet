@@ -17,8 +17,9 @@
 
 .dataTable {
   width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-bottom: 1px solid #111;
   /* font-family: Arial, sans-serif; */
 }
 
@@ -34,7 +35,7 @@
   border-bottom: 1px solid #ddd;
 }
 
-.dataTable tbody tr:nth-child(even) {
+.dataTable tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
 
@@ -43,7 +44,12 @@
 }
 
 .dataTable tbody td {
-  padding: 8px;
+  border-top: 1px solid #ddd;
+  padding: 8px 10px;
+}
+
+.dataTable tbody tr:first-child td {
+  border-top: none;
 }
 
 .dataTable_wrapper input[type="text"] {
@@ -78,6 +84,10 @@
 .dataTable_wrapper .pagination span {
   line-height: 32px;
   font-size: 16px;
+}
+
+.dataTables_empty {
+  text-align: center;
 }
 
 .paginate_button {
@@ -125,7 +135,7 @@
   background: linear-gradient(to bottom, #585858 0%, #111 100%);
 }
 
-.paginate_button.disable {
+.dataTables_paginate button:disabled {
   cursor: default;
   color: #666 !important;
   border: 1px solid transparent;

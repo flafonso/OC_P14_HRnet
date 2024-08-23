@@ -157,17 +157,27 @@ function DataTable({ id, className, data, columns }: DataTableProps) {
           </tr>
         </thead>
         <tbody>
-          {paginationData.map((rowData: RowData, index: number) => (
-            <tr key={index}>{rowContent(rowData)}</tr>
-          ))}
+          {dataMatcheSearch.length > 0 ? (
+            paginationData.map((rowData: RowData, index: number) => (
+              <tr key={index}>{rowContent(rowData)}</tr>
+            ))
+          ) : (
+            <tr>
+              <td className="dataTables_empty" colSpan={columns.length}>
+                No matching records found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <div className="dataTables-footer">
         <div className="dataTables_info" id={`${id}_info`}>
           Showing{" "}
-          {`${rowsPerPage * currentPage + 1} to ${
-            rowsPerPage * currentPage + rowsPerPage
-          } of ${dataMatcheSearch.length}`}
+          {`${
+            paginationData.length > 0 ? rowsPerPage * currentPage + 1 : 0
+          } to ${paginationData.length} of ${dataMatcheSearch.length}`}
+          {dataMatcheSearch.length !== sortedData.length &&
+            ` (filtered from ${data.length} total entries)`}
         </div>
         <div className="dataTables_paginate" id={`${id}_paginate`}>
           <button
