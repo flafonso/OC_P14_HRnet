@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import { addEmployee } from "./employeeSlice";
+import SelectMenu from "../../components/selectMenu/SelectMenu";
+
+import { states } from "../../data/data";
 
 const schema = z.object({
   firstName: z.string().min(1),
@@ -56,13 +59,14 @@ function EmployeeForm() {
         <input {...register("city")} id="city" type="text" />
 
         <label htmlFor="state">State</label>
-        <select {...register("state")} name="state" id="state">
+        <SelectMenu options={states} name="state" id="state"/>
+        {/* <select {...register("state")} name="state" id="state">
           <option>Alabama</option>
           <option>Alaska</option>
           <option>American Samoa</option>
           <option>Arizona</option>
           <option>Arkansas</option>
-        </select>
+        </select> */}
 
         <label htmlFor="zip-code">Zip Code</label>
         <input {...register("zipCode")} id="zip-code" type="number" />
