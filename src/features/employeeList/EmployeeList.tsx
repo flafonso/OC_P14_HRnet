@@ -15,13 +15,16 @@ const columns = [
 ];
 
 function EmployeeList() {
-  const employees = useSelector(
-    (state: RootState) => state.employeeList.employees
-  );
-  // console.log(employees);
+  const employees = useSelector((state: RootState) => {
+    console.log(state);
+    return state.employeeList.employees;
+  });
+
+  console.log(employees);
   return (
     <>
       <DataTable
+        key={employees.length}
         id="employee-table"
         className="display"
         data={employees}

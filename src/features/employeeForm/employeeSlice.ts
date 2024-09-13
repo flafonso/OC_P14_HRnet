@@ -14,9 +14,11 @@ const employeesSlice = createSlice({
   initialState,
   reducers: {
     addEmployee(state, action: PayloadAction<FormFields>) {
-      // console.log(state);
-      // console.log(action);
+      console.log("Employees before:", state.employees);
+
       state.employees.push(action.payload);
+
+      console.log("Employees after:", state.employees);
     },
   },
 });

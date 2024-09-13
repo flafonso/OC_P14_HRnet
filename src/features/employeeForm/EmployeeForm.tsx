@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
@@ -26,12 +26,13 @@ function EmployeeForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    // console.log(data);
+    console.log(data);
     dispatch(addEmployee(data));
   };
 
@@ -59,7 +60,14 @@ function EmployeeForm() {
         <input {...register("city")} id="city" type="text" />
 
         <label htmlFor="state">State</label>
-        <SelectMenu options={states} name="state" id="state"/>
+        <Controller
+          name="state"
+          control={control}
+          render={({ field }) => (
+            <SelectMenu onChange={field.onChange} options={states} name="state" id="state" />
+          )}
+        />
+        {/* <SelectMenu options={states} onChange={() => {}} name="state" id="state" /> */}
         {/* <select {...register("state")} name="state" id="state">
           <option>Alabama</option>
           <option>Alaska</option>
