@@ -17,6 +17,9 @@
   cursor: pointer;
   text-align: left;
 }
+.select-button.open {
+  border-radius: 4px 4px 0px 0px;
+}
 
 .select-button::after {
   content: "v";
@@ -27,11 +30,12 @@
 .select-list {
   position: absolute;
   width: 100%;
+  box-sizing: border-box;
   margin-top: 0px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #c5c5c5;
+  border-radius:  0px 0px 4px 4px;
   background-color: white;
-  z-index: 1000;
+  z-index: 1;
   max-height: 200px;
   overflow-y: auto;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -45,7 +49,7 @@
 }
 
 .select-option:hover,
-.select-option.active {
+.select-option.focus {
   border: 1px solid #003eff;
   background: #007fff;
   color: #ffffff;

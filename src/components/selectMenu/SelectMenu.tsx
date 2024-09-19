@@ -22,7 +22,8 @@ function SelectMenu({
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<Option>(options[0]);
-  const selectRef = useRef<HTMLSelectElement>(null);
+  const [listIndex, setListIndex] = useState<number>(0);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
@@ -31,18 +32,61 @@ function SelectMenu({
       console.log("coucou");
       onChange(option.value);
     }
+    setListIndex(findSelectedOptionIndex(option));
+  };
+
+  const findSelectedOptionIndex: (thisOption?: Option) => number = (
+    thisOption
+  ) => {
+    if (thisOption !== undefined) {
+      return options.findIndex((option) => option === thisOption);
+    }
+    return options.findIndex((option) => option === selectedOption);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    console.log(event.key);
+    event.preventDefault();
+    if (!isOpen) {
+      if (event.key === "Enter") {
+        setIsOpen(true);
+      }
+      return;
+    }
+    switch (event.key) {
+      case "ArrowUp":
+        setListIndex(listIndex === 0 ? options.length - 1 : listIndex - 1);
+        break;
+      case "ArrowDown":
+        setListIndex(listIndex === options.length - 1 ? 0 : listIndex + 1);
+        break;
+      case "Enter":
+        handleOptionClick(options[listIndex]);
+        break;
+      case "Escape":
+        setIsOpen(false);
+        setListIndex(findSelectedOptionIndex());
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
-    console.log(selectRef.current);
-  }, []);
+    if (isOpen) {
+      // console.log(listRef.current?.children[listIndex]);
+      // console.log(listIndex);
+      (listRef.current?.children[listIndex] as HTMLElement).scrollIntoView({
+        block: "nearest",
+      });
+    }
+  }, [listIndex, isOpen]);
 
   return (
     <div className={`selectmenu select-${name}`}>
       <select
         name={name}
         id={id}
-        ref={selectRef}
         value={selectedOption.value}
         onChange={() => {}}
       >
@@ -52,17 +96,19 @@ function SelectMenu({
           </option>
         ))}
       </select>
-      <button className={`select-button`} onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className={`select-button ${isOpen ? "open" : ""}`}
+        onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleKeyDown}
+      >
         {selectedOption.label}
       </button>
       {isOpen && (
-        <ul className={`select-list`}>
+        <ul ref={listRef} className={`select-list`}>
           {options.map((option: Option, index: number) => (
             <li
               key={`${id}-option-${index}`}
-              className={`select-option ${
-                selectedOption === option ? "active" : ""
-              }`}
+              className={`select-option ${listIndex === index ? "focus" : ""}`}
               onClick={() => handleOptionClick(option)}
             >
               {option.label}
