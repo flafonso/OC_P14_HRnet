@@ -1,7 +1,7 @@
 .selectmenu {
   position: relative;
   display: inline-block;
-  width: 200px;
+  width: 16em;
 }
 
 .selectmenu select {
@@ -9,22 +9,28 @@
 }
 
 .select-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 10px;
-  background-color: white;
+  padding: 6px 16px;
+  background-color: #f6f6f6;
   border: 1px solid #c5c5c5;
   border-radius: 4px;
   cursor: pointer;
   text-align: left;
+  font-size: 16px;
 }
 .select-button.open {
   border-radius: 4px 4px 0px 0px;
 }
 
-.select-button::after {
-  content: "v";
-  float: right;
-  margin-right: 10px;
+.select-button > svg {
+  transition: 300ms ease-in-out ;
+}
+
+.select-button.open > svg {
+  transform: rotate(-180deg);
 }
 
 .select-list {
@@ -41,6 +47,7 @@
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   padding: 0;
   list-style: none;
+  font-size: 16px;
 }
 
 .select-option {

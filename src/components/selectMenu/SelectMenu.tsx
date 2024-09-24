@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import "./selectMenu.css";
+import CaretDownIcon from "../../assets/CaretDownIcon";
 
 interface Option {
   label: string;
@@ -42,6 +43,11 @@ function SelectMenu({
       return options.findIndex((option) => option === thisOption);
     }
     return options.findIndex((option) => option === selectedOption);
+  };
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsOpen(!isOpen);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -98,10 +104,11 @@ function SelectMenu({
       </select>
       <button
         className={`select-button ${isOpen ? "open" : ""}`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleButtonClick}
         onKeyDown={handleKeyDown}
       >
         {selectedOption.label}
+        <CaretDownIcon />
       </button>
       {isOpen && (
         <ul ref={listRef} className={`select-list`}>
