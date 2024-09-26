@@ -6,7 +6,7 @@ import { AppDispatch } from "../../app/store";
 import { addEmployee } from "./employeeSlice";
 import SelectMenu from "../../components/selectMenu/SelectMenu";
 
-import { stateList } from "../../data/data";
+import { stateList, departmentList } from "../../data/data";
 
 const schema = z.object({
   firstName: z.string().min(1),
@@ -67,7 +67,13 @@ function EmployeeForm() {
           control={control}
           defaultValue={stateList[0].value}
           render={({ field }) => (
-            <SelectMenu onChange={field.onChange} defaultValue={field.value} options={stateList} name="state" id="state" />
+            <SelectMenu
+              name="state"
+              id="state"
+              onChange={field.onChange}
+              defaultValue={field.value}
+              options={stateList}
+            />
           )}
         />
         <label htmlFor="zip-code">Zip Code</label>
@@ -75,13 +81,20 @@ function EmployeeForm() {
       </fieldset>
 
       <label htmlFor="department">Department</label>
-      <select {...register("department")} name="department" id="department">
-        <option>Sales</option>
-        <option>Marketing</option>
-        <option>Engineering</option>
-        <option>Human Resources</option>
-        <option>Legal</option>
-      </select>
+      <Controller
+        name="department"
+        control={control}
+        defaultValue={departmentList[0].value}
+        render={({ field }) => (
+          <SelectMenu
+            name="department"
+            id="department"
+            onChange={field.onChange}
+            defaultValue={field.value}
+            options={departmentList}
+          />
+        )}
+      />
       {Object.keys(errors).length > 0 && (
         <span className="form-error-message">Need to fill in all fields</span>
       )}
