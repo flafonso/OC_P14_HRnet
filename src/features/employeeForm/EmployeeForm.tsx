@@ -67,7 +67,7 @@ function EmployeeForm() {
           control={control}
           defaultValue={stateList[0].value}
           render={({ field }) => (
-            <SelectMenu onChange={field.onChange} value={field.value} options={stateList} name="state" id="state" />
+            <SelectMenu onChange={field.onChange} defaultValue={field.value} options={stateList} name="state" id="state" />
           )}
         />
         <label htmlFor="zip-code">Zip Code</label>
