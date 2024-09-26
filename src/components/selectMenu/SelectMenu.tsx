@@ -10,29 +10,47 @@ interface Option {
 
 type Options = Option[];
 
+const defaultOptions: Options = [
+  { label: "Option 1", value: "option1" },
+  { label: "Option 2", value: "option2" },
+  { label: "Option 3", value: "option3" },
+];
+
 function SelectMenu({
   onChange,
-  options,
+  options = defaultOptions,
   name,
   id,
+  defaultValue,
 }: {
-  onChange: (value: any) => void;
-  options: Options;
+  onChange?: (value: any) => void;
+  options?: Options;
   name: string;
   id: string;
+  defaultValue?: string;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<Option>(options[0]);
+  const [selectedOption, setSelectedOption] = useState<Option>(
+    () => options.find((option) => option.value === defaultValue) || options[0]
+  );
   const [listIndex, setListIndex] = useState<number>(0);
   const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    setSelectedOption(
+      options.find((option) => option.value === defaultValue) || options[0]
+    );
+  }, [defaultValue, options]);
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(selectedOption.value);
+    }
+  }, [onChange, selectedOption]);
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    if (onChange) {
-      console.log("coucou");
-      onChange(option.value);
-    }
     setListIndex(findSelectedOptionIndex(option));
   };
 

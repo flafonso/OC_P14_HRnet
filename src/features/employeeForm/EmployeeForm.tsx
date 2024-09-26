@@ -6,7 +6,7 @@ import { AppDispatch } from "../../app/store";
 import { addEmployee } from "./employeeSlice";
 import SelectMenu from "../../components/selectMenu/SelectMenu";
 
-import { states } from "../../data/data";
+import { stateList } from "../../data/data";
 
 const schema = z.object({
   firstName: z.string().min(1),
@@ -27,6 +27,7 @@ function EmployeeForm() {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
@@ -34,6 +35,7 @@ function EmployeeForm() {
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
     dispatch(addEmployee(data));
+    reset();
   };
 
   return (
@@ -63,19 +65,11 @@ function EmployeeForm() {
         <Controller
           name="state"
           control={control}
+          defaultValue={stateList[0].value}
           render={({ field }) => (
-            <SelectMenu onChange={field.onChange} options={states} name="state" id="state" />
+            <SelectMenu onChange={field.onChange} value={field.value} options={stateList} name="state" id="state" />
           )}
         />
-        {/* <SelectMenu options={states} onChange={() => {}} name="state" id="state" /> */}
-        {/* <select {...register("state")} name="state" id="state">
-          <option>Alabama</option>
-          <option>Alaska</option>
-          <option>American Samoa</option>
-          <option>Arizona</option>
-          <option>Arkansas</option>
-        </select> */}
-
         <label htmlFor="zip-code">Zip Code</label>
         <input {...register("zipCode")} id="zip-code" type="number" />
       </fieldset>

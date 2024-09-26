@@ -3,7 +3,7 @@ type Options = {
   value: string;
 }[];
 
-export const states: Options = [
+export const stateList: Options = [
   {
     label: "Alabama",
     value: "AL",
