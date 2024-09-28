@@ -39,66 +39,69 @@ function EmployeeForm() {
   };
 
   return (
-    <form id="create-employee" onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="first-name">First Name</label>
-      <input {...register("firstName")} type="text" id="first-name" />
+    <>
+      <form id="create-employee" onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="first-name">First Name</label>
+        <input {...register("firstName")} type="text" id="first-name" />
 
-      <label htmlFor="last-name">Last Name</label>
-      <input {...register("lastName")} type="text" id="last-name" />
+        <label htmlFor="last-name">Last Name</label>
+        <input {...register("lastName")} type="text" id="last-name" />
 
-      <label htmlFor="date-of-birth">Date of Birth</label>
-      <input {...register("dateOfBirth")} id="date-of-birth" type="text" />
+        <label htmlFor="date-of-birth">Date of Birth</label>
+        <input {...register("dateOfBirth")} id="date-of-birth" type="text" />
 
-      <label htmlFor="start-date">Start Date</label>
-      <input {...register("startDate")} id="start-date" type="text" />
+        <label htmlFor="start-date">Start Date</label>
+        <input {...register("startDate")} id="start-date" type="text" />
 
-      <fieldset className="address">
-        <legend>Address</legend>
+        <fieldset className="address">
+          <legend>Address</legend>
 
-        <label htmlFor="street">Street</label>
-        <input {...register("street")} id="street" type="text" />
+          <label htmlFor="street">Street</label>
+          <input {...register("street")} id="street" type="text" />
 
-        <label htmlFor="city">City</label>
-        <input {...register("city")} id="city" type="text" />
+          <label htmlFor="city">City</label>
+          <input {...register("city")} id="city" type="text" />
 
-        <label htmlFor="state">State</label>
+          <label htmlFor="state">State</label>
+          <Controller
+            name="state"
+            control={control}
+            defaultValue={stateList[0].value}
+            render={({ field }) => (
+              <SelectMenu
+                name="state"
+                id="state"
+                onChange={field.onChange}
+                defaultValue={field.value}
+                options={stateList}
+              />
+            )}
+          />
+          <label htmlFor="zip-code">Zip Code</label>
+          <input {...register("zipCode")} id="zip-code" type="number" />
+        </fieldset>
+
+        <label htmlFor="department">Department</label>
         <Controller
-          name="state"
+          name="department"
           control={control}
-          defaultValue={stateList[0].value}
+          defaultValue={departmentList[0].value}
           render={({ field }) => (
             <SelectMenu
-              name="state"
-              id="state"
+              name="department"
+              id="department"
               onChange={field.onChange}
               defaultValue={field.value}
-              options={stateList}
+              options={departmentList}
             />
           )}
         />
-        <label htmlFor="zip-code">Zip Code</label>
-        <input {...register("zipCode")} id="zip-code" type="number" />
-      </fieldset>
-
-      <label htmlFor="department">Department</label>
-      <Controller
-        name="department"
-        control={control}
-        defaultValue={departmentList[0].value}
-        render={({ field }) => (
-          <SelectMenu
-            name="department"
-            id="department"
-            onChange={field.onChange}
-            defaultValue={field.value}
-            options={departmentList}
-          />
+        {Object.keys(errors).length > 0 && (
+          <span className="form-error-message">Need to fill in all fields</span>
         )}
-      />
-      {Object.keys(errors).length > 0 && (
-        <span className="form-error-message">Need to fill in all fields</span>
-      )}
-    </form>
+      </form>
+      <button type="submit" form="create-employee">Save</button>
+    </>
   );
 }
 

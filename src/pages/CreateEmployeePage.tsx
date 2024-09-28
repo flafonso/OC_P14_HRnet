@@ -12,7 +12,6 @@ function CreateEmployeePage() {
         <h1>Create Employee</h1>
         <EmployeeForm />
         <br />
-        <button type="submit" form="create-employee">Save</button>
         <br />
         <br />
         <br />
