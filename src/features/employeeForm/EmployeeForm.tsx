@@ -22,7 +22,7 @@ const schema = z.object({
 
 export type FormFields = z.infer<typeof schema>;
 
-function EmployeeForm() {
+function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
   const {
     register,
     handleSubmit,
@@ -36,6 +36,7 @@ function EmployeeForm() {
     console.log(data);
     dispatch(addEmployee(data));
     reset();
+    onSubmitSuccess();
   };
 
   return (
@@ -100,7 +101,9 @@ function EmployeeForm() {
           <span className="form-error-message">Need to fill in all fields</span>
         )}
       </form>
-      <button type="submit" form="create-employee">Save</button>
+      <button type="submit" form="create-employee">
+        Save
+      </button>
     </>
   );
 }
