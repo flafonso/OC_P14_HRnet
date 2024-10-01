@@ -42,26 +42,86 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
   return (
     <>
       <form id="create-employee" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="first-name">First Name</label>
-        <input {...register("firstName")} type="text" id="first-name" />
+        <label
+          htmlFor="first-name"
+          className={`${errors["firstName"] ? "error-label" : ""}`}
+        >
+          First Name
+        </label>
+        <input
+          {...register("firstName")}
+          type="text"
+          id="first-name"
+          className={`${errors["firstName"] ? "error-input" : ""}`}
+        />
 
-        <label htmlFor="last-name">Last Name</label>
-        <input {...register("lastName")} type="text" id="last-name" />
+        <label
+          htmlFor="last-name"
+          className={`${errors["lastName"] ? "error-label" : ""}`}
+        >
+          Last Name
+        </label>
+        <input
+          {...register("lastName")}
+          type="text"
+          id="last-name"
+          className={`${errors["lastName"] ? "error-input" : ""}`}
+        />
 
-        <label htmlFor="date-of-birth">Date of Birth</label>
-        <input {...register("dateOfBirth")} id="date-of-birth" type="text" />
+        <label
+          htmlFor="date-of-birth"
+          className={`${errors["dateOfBirth"] ? "error-label" : ""}`}
+        >
+          Date of Birth
+        </label>
+        <input
+          {...register("dateOfBirth")}
+          id="date-of-birth"
+          type="text"
+          className={`${errors["dateOfBirth"] ? "error-input" : ""}`}
+        />
 
-        <label htmlFor="start-date">Start Date</label>
-        <input {...register("startDate")} id="start-date" type="text" />
+        <label
+          htmlFor="start-date"
+          className={`${errors["startDate"] ? "error-label" : ""}`}
+        >
+          Start Date
+        </label>
+        <input
+          {...register("startDate")}
+          id="start-date"
+          type="text"
+          className={`${errors["startDate"] ? "error-input" : ""}`}
+        />
 
         <fieldset className="address">
           <legend>Address</legend>
 
-          <label htmlFor="street">Street</label>
-          <input {...register("street")} id="street" type="text" />
+          <label
+            htmlFor="street"
+            className={`${errors["street"] ? "error-label" : ""}`}
+          >
+            Street
+          </label>
+          <input
+            {...register("street")}
+            id="street"
+            type="text"
+            className={`${errors["street"] ? "error-input" : ""}`}
+          />
 
-          <label htmlFor="city">City</label>
-          <input {...register("city")} id="city" type="text" />
+          <label
+            htmlFor="city"
+            className={`${errors["city"] ? "error-label" : ""}`}
+          >
+            City
+          </label>
+          <input
+            {...register("city")}
+            id="city"
+            type="text"
+            className={`${errors["city"] ? "error-input" : ""}`}
+          />
 
           <label htmlFor="state">State</label>
           <Controller
@@ -78,8 +138,18 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
               />
             )}
           />
-          <label htmlFor="zip-code">Zip Code</label>
-          <input {...register("zipCode")} id="zip-code" type="number" />
+          <label
+            htmlFor="zip-code"
+            className={`${errors["zipCode"] ? "error-label" : ""}`}
+          >
+            Zip Code
+          </label>
+          <input
+            {...register("zipCode")}
+            id="zip-code"
+            type="number"
+            className={`${errors["zipCode"] ? "error-input" : ""}`}
+          />
         </fieldset>
 
         <label htmlFor="department">Department</label>
@@ -97,13 +167,20 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
             />
           )}
         />
-        {Object.keys(errors).length > 0 && (
-          <span className="form-error-message">Need to fill in all fields</span>
-        )}
       </form>
       <button type="submit" form="create-employee">
         Save
       </button>
+      {Object.keys(errors).length > 0 && (
+        <span
+          className="form-error"
+          onClick={() => {
+            console.log(errors);
+          }}
+        >
+          Need to fill in all fields
+        </span>
+      )}
     </>
   );
 }

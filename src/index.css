@@ -25,3 +25,18 @@ label {
 #create-employee {
   margin-bottom: 16px;
 }
+
+.form-error {
+  margin-top: 15px;
+  color: red;
+}
+
+.error-label {
+  color: red;
+}
+
+.error-input {
+  background-color: #fff1f1;
+  border: 2px solid red;
+  outline: none;
+}
