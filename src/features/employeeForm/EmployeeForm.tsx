@@ -5,14 +5,16 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import { addEmployee } from "./employeeSlice";
 import SelectMenu from "../../components/selectMenu/SelectMenu";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { stateList, departmentList } from "../../data/data";
 
 const schema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
-  dateOfBirth: z.string().min(1),
-  startDate: z.string().min(1),
+  dateOfBirth: z.date(),
+  startDate: z.date(),
   street: z.string().min(1),
   city: z.string().min(1),
   state: z.string().min(1),
@@ -21,6 +23,14 @@ const schema = z.object({
 });
 
 export type FormFields = z.infer<typeof schema>;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
 
 function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
   const {
@@ -34,7 +44,13 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
-    dispatch(addEmployee(data));
+    const formattedData = {
+      ...data,
+      dateOfBirth: formatDate(data.dateOfBirth),
+      startDate: formatDate(data.startDate),
+    }
+    console.log(formattedData);
+    dispatch(addEmployee(formattedData));
     reset();
     onSubmitSuccess();
   };
@@ -74,11 +90,17 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
         >
           Date of Birth
         </label>
-        <input
-          {...register("dateOfBirth")}
-          id="date-of-birth"
-          type="text"
-          className={`${errors["dateOfBirth"] ? "error-input" : ""}`}
+        <Controller
+          control={control}
+          name="dateOfBirth"
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value}
+              onChange={(date: Date | null) => field.onChange(date)}
+              dateFormat="MM/dd/yyyy"
+              className={`${errors["dateOfBirth"] ? "error-input" : ""}`}
+            />
+          )}
         />
 
         <label
@@ -87,11 +109,17 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
         >
           Start Date
         </label>
-        <input
-          {...register("startDate")}
-          id="start-date"
-          type="text"
-          className={`${errors["startDate"] ? "error-input" : ""}`}
+        <Controller
+          control={control}
+          name="startDate"
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value}
+              onChange={(date: Date | null) => field.onChange(date)}
+              dateFormat="MM/dd/yyyy"
+              className={`${errors["startDate"] ? "error-input" : ""}`}
+            />
+          )}
         />
 
         <fieldset className="address">
