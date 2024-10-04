@@ -1,6 +1,6 @@
-import DataTable from "../../components/dataTable/DataTable";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import { DataTable } from "@flafonso/react-datatable-component";
 
 const columns = [
   { title: "First Name", data: "firstName" },
