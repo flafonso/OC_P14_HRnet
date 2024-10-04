@@ -11,15 +11,33 @@ import "react-datepicker/dist/react-datepicker.css";
 import { stateList, departmentList } from "../../data/data";
 
 const schema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  dateOfBirth: z.date(),
-  startDate: z.date(),
-  street: z.string().min(1),
-  city: z.string().min(1),
-  state: z.string().min(1),
-  zipCode: z.string().min(1),
-  department: z.string().min(1),
+  firstName: z
+    .string()
+    .min(1, { message: "First name is required" })
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/, {
+      message:
+        "First name should contain only letters, spaces, hyphens, or apostrophes",
+    }),
+  lastName: z
+    .string()
+    .min(1, { message: "Last name is required" })
+    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/, {
+      message:
+        "Last name should contain only letters, spaces, hyphens, or apostrophes",
+    }),
+  dateOfBirth: z
+    .date({ message: "Date of birth is required" })
+    .max(new Date(), { message: "Date of birth cannot be in the future" }),
+  startDate: z.date({ message: "Start date is required" }),
+  street: z.string().min(1, { message: "Street is required" }),
+  city: z.string().min(1, { message: "City is required" }),
+  state: z.string().min(2, { message: "State is required" }),
+  zipCode: z
+    .string()
+    .min(5, { message: "Zip code must be at least 5 digits" })
+    .max(10, { message: "Zip code cannot exceed 10 characters" })
+    .regex(/^\d{5}(?:[-\s]\d{4})?$/, { message: "Invalid zip code format" }),
+  department: z.string().min(1, { message: "Department is required" }),
 });
 
 export type FormFields = z.infer<typeof schema>;
@@ -48,7 +66,7 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
       ...data,
       dateOfBirth: formatDate(data.dateOfBirth),
       startDate: formatDate(data.startDate),
-    }
+    };
     console.log(formattedData);
     dispatch(addEmployee(formattedData));
     reset();
@@ -175,7 +193,7 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
           <input
             {...register("zipCode")}
             id="zip-code"
-            type="number"
+            type="text"
             className={`${errors["zipCode"] ? "error-input" : ""}`}
           />
         </fieldset>
