@@ -25,6 +25,7 @@ Convert or replace outdated jQuery plugins for date selection, modals, dropdowns
 - **Redux**: For state management.
 - **HTML/CSS**
 - **JavaScript/TypeScript**: Ensuring type safety and better  developer experience.
+- **React DataTable Component**: Custom-built DataTable component published on npm, used in the Employee List page.
 - **npm/yarn**: For managing dependencies.
 
 ## Installation
@@ -62,4 +63,4 @@ yarn dev
 Navigate to the "Create Employee" page to fill out the form and add a new employee. The form includes fields for basic information such as name, date of birth (using the integrated React date picker), department, and address.
 
 2. **View Employee List**
-Once an employee is created, they will appear in the "Employee List" table. You can sort and filter the data in the table using the custom React table component, which replaces the older jQuery DataTables plugin.
+Once an employee is created, they will appear in the "Employee List" table. You can sort and filter the data using **react-datatable-component**, a custom React table component published on npm, which replaces the old jQuery DataTables plugin.
