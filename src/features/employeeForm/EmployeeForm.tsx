@@ -61,13 +61,11 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
 
   const dispatch = useDispatch<AppDispatch>();
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
     const formattedData = {
       ...data,
       dateOfBirth: formatDate(data.dateOfBirth),
       startDate: formatDate(data.startDate),
     };
-    console.log(formattedData);
     dispatch(addEmployee(formattedData));
     reset();
     onSubmitSuccess();
@@ -79,7 +77,6 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
     for (let start = startDate; start < endDate; start++) {
       rangeList.push(start.toString());
     }
-    console.log(rangeList);
     return rangeList;
   };
   const years = range(1900, today.getFullYear() + 1);

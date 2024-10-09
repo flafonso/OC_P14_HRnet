@@ -69,7 +69,6 @@ function SelectMenu({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    console.log(event.key);
     event.preventDefault();
     if (!isOpen) {
       if (event.key === "Enter") {
@@ -98,8 +97,6 @@ function SelectMenu({
 
   useEffect(() => {
     if (isOpen) {
-      // console.log(listRef.current?.children[listIndex]);
-      // console.log(listIndex);
       (listRef.current?.children[listIndex] as HTMLElement).scrollIntoView({
         block: "nearest",
       });

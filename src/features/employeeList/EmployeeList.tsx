@@ -16,11 +16,9 @@ const columns = [
 
 function EmployeeList() {
   const employees = useSelector((state: RootState) => {
-    console.log(state);
     return state.employeeList.employees;
   });
 
-  console.log(employees);
   return (
     <>
       <DataTable
