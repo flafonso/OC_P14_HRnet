@@ -73,6 +73,31 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
     onSubmitSuccess();
   };
 
+  const today = new Date();
+  const range = (startDate: number, endDate: number) => {
+    const rangeList = [];
+    for (let start = startDate; start < endDate; start++) {
+      rangeList.push(start.toString());
+    }
+    console.log(rangeList);
+    return rangeList;
+  };
+  const years = range(1900, today.getFullYear() + 1);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   return (
     <>
       <form id="create-employee" onSubmit={handleSubmit(onSubmit)}>
@@ -113,6 +138,62 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
           name="dateOfBirth"
           render={({ field }) => (
             <DatePicker
+              renderCustomHeader={({
+                date,
+                changeYear,
+                changeMonth,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div
+                  style={{
+                    margin: 10,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button
+                    onClick={decreaseMonth}
+                    disabled={prevMonthButtonDisabled}
+                  >
+                    {"<"}
+                  </button>
+                  <select
+                    value={date.getFullYear()}
+                    onChange={({ target: { value } }) =>
+                      changeYear(Number(value))
+                    }
+                  >
+                    {years.map((option: string) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={months[date.getMonth()]}
+                    onChange={({ target: { value } }) =>
+                      changeMonth(months.indexOf(value))
+                    }
+                  >
+                    {months.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    onClick={increaseMonth}
+                    disabled={nextMonthButtonDisabled}
+                  >
+                    {">"}
+                  </button>
+                </div>
+              )}
               selected={field.value}
               onChange={(date: Date | null) => field.onChange(date)}
               dateFormat="MM/dd/yyyy"
@@ -132,6 +213,62 @@ function EmployeeForm({ onSubmitSuccess }: { onSubmitSuccess: () => void }) {
           name="startDate"
           render={({ field }) => (
             <DatePicker
+              renderCustomHeader={({
+                date,
+                changeYear,
+                changeMonth,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div
+                  style={{
+                    margin: 10,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button
+                    onClick={decreaseMonth}
+                    disabled={prevMonthButtonDisabled}
+                  >
+                    {"<"}
+                  </button>
+                  <select
+                    value={date.getFullYear()}
+                    onChange={({ target: { value } }) =>
+                      changeYear(Number(value))
+                    }
+                  >
+                    {years.map((option: string) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={months[date.getMonth()]}
+                    onChange={({ target: { value } }) =>
+                      changeMonth(months.indexOf(value))
+                    }
+                  >
+                    {months.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    onClick={increaseMonth}
+                    disabled={nextMonthButtonDisabled}
+                  >
+                    {">"}
+                  </button>
+                </div>
+              )}
               selected={field.value}
               onChange={(date: Date | null) => field.onChange(date)}
               dateFormat="MM/dd/yyyy"
